@@ -1,13 +1,12 @@
 package com.bridgelabz.quantity.service;
 
 import com.bridgelabz.quantity.DTO.ValueAndUnitDTO;
+import com.bridgelabz.quantity.Exception.UnitConversionException;
 import com.bridgelabz.quantity.services.QuantityConversion;
 import org.junit.Assert;
-
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-public class QuantityConversionTest {
+class QuantityConversionTests {
 
     //Length
 
@@ -169,8 +168,20 @@ public class QuantityConversionTest {
 
     @Test
     public void given212FahrenheitAnd100Celsius_shouldReturnEqual() {
-        ValueAndUnitDTO first = new ValueAndUnitDTO(QuantityConversion.MeasurementUnit.FAHRENHEIT, 212.0);
-        ValueAndUnitDTO second = new ValueAndUnitDTO(QuantityConversion.MeasurementUnit.CELSIUS, 100.0);
+        ValueAndUnitDTO first = new ValueAndUnitDTO(QuantityConversion.MeasurementUnit.FAHRENHEIT, 212);
+        ValueAndUnitDTO second = new ValueAndUnitDTO(QuantityConversion.MeasurementUnit.CELSIUS, 100);
         Assert.assertEquals(first, second);
+    }
+
+    //Exception
+
+    @Test
+    public void givenDifferentUnitType_whenConvert_shouldReturnException() {
+        try {
+            ValueAndUnitDTO first = new ValueAndUnitDTO(QuantityConversion.MeasurementUnit.FAHRENHEIT, 212.0);
+            ValueAndUnitDTO second = new ValueAndUnitDTO(QuantityConversion.MeasurementUnit.KILO_GRAMS, 100.0);
+        } catch (UnitConversionException e) {
+            Assert.assertEquals(UnitConversionException.ExceptionType.UNIT_TYPE_DIFFERENT, e.type);
+        }
     }
 }

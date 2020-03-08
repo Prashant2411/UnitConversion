@@ -1,12 +1,9 @@
 package com.bridgelabz.quantity.controller;
 
 import com.bridgelabz.quantity.DTO.ValueAndUnitDTO;
-import com.bridgelabz.quantity.services.ConvertValue;
+import com.bridgelabz.quantity.services.UnitConversionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -15,10 +12,20 @@ import javax.validation.Valid;
 public class QuantityMeasurmentController {
 
     @Autowired
-    ConvertValue convertValue;
+    UnitConversionService unitConversionService;
 
     @PostMapping("/unitconverter")
     public double getConverted(@Valid @RequestBody ValueAndUnitDTO... obj){
-        return convertValue.convertValue(obj[0], obj[1]);
+        return unitConversionService.convertValue(obj[0], obj[1]);
+    }
+
+    @GetMapping("/getunittype")
+    public String getUnitType() {
+        return unitConversionService.getUnitType();
+    }
+
+    @GetMapping("/getunits/{unitType}")
+    public String getUnits(@PathVariable String unitType){
+        return unitConversionService.getUnits(unitType);
     }
 }

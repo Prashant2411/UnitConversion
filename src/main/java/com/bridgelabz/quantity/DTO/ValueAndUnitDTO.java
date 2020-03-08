@@ -7,8 +7,10 @@ import javax.validation.constraints.NotNull;
 
 @ToString
 public class ValueAndUnitDTO {
+
     @NotNull
     public double value;
+
     @NotNull
     public QuantityConversion.MeasurementUnit unit;
 
