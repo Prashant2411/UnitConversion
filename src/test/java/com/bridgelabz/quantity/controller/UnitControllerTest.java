@@ -37,7 +37,7 @@ public class UnitControllerTest {
         obj[1].value = 1;
     }
 
-    // /unitconverter
+    // /unit/convert
 
     @Test
     void givenValueAndUnitDtoJson_whenGetConverted_thenReturnStatus200() throws Exception {
@@ -76,20 +76,20 @@ public class UnitControllerTest {
         }
     }
 
-    // /getunittype
+    // /unit/type
 
     @Test
     void whenGetUnitType_thenReturnUnitType() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(get("/getunittype"))
+        MvcResult mvcResult = this.mockMvc.perform(get("/unit/type"))
                 .andReturn();
         Assert.assertEquals("[\"LENGTH\",\"VOLUME\",\"WEIGHT\",\"TEMPERATURE\"]", mvcResult.getResponse().getContentAsString());
     }
 
-    // /getunits
+    // /unit/units/{unitType}
 
     @Test
     void givenUnitType_whenGetUnits_thenReturnUnitType() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(get("/getunits/LENGTH"))
+        MvcResult mvcResult = this.mockMvc.perform(get("/unit/units/LENGTH"))
                 .andReturn();
         Assert.assertEquals("[\"FEET\",\"INCH\",\"YARD\",\"CENTIMETER\"]", mvcResult.getResponse().getContentAsString());
     }
@@ -97,7 +97,7 @@ public class UnitControllerTest {
     @Test
     void givenWrongUnitType_whenGetUnits_thenReturnException() throws Exception {
         try {
-            MvcResult mvcResult = this.mockMvc.perform(get("/getunits/asd"))
+            MvcResult mvcResult = this.mockMvc.perform(get("/units/asd"))
                     .andReturn();
         } catch (UnitConversionException e) {
             Assert.assertEquals(UnitConversionException.ExceptionType.NO_SUCH_UNIT_TYPE, e.type);

@@ -9,7 +9,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/unit")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "${url}")
 public class UnitController {
 
     @Autowired

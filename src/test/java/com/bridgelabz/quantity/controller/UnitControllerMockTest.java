@@ -2,11 +2,10 @@ package com.bridgelabz.quantity.controller;
 
 import com.bridgelabz.quantity.DTO.ValueAndUnitDTO;
 import com.bridgelabz.quantity.Exception.UnitConversionException;
+import com.bridgelabz.quantity.services.IUnitConversionService;
 import com.bridgelabz.quantity.services.UnitConversionService;
-import com.bridgelabz.quantity.services.QuantityConversion;
 import com.google.gson.Gson;
 import org.junit.Assert;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -34,7 +33,7 @@ public class UnitControllerMockTest {
     @MockBean
     private UnitConversionService unitConversionService;
 
-    // /unitconverter
+    // /unit/convert
 
     @Test
     void givenValueAndUnitDtoJson_whenGetConverted_thenReturnStatus200() throws Exception {
@@ -77,7 +76,7 @@ public class UnitControllerMockTest {
         }
     }
 
-    // /getunittype
+    // /unit/type
 
     @Test
     void whenGetUnitType_thenReturnUnitType() throws Exception {
@@ -87,12 +86,12 @@ public class UnitControllerMockTest {
         Assert.assertEquals("LENGTH", mvcResult.getResponse().getContentAsString());
     }
 
-    // /getunits
+    // /unit/units/{unitType}
 
     @Test
     void givenUnitType_whenGetUnits_thenReturnUnitType() throws Exception {
         when(unitConversionService.getUnits(any())).thenReturn("METER");
-        MvcResult mvcResult = this.mockMvc.perform(get("/units/LENGTH"))
+        MvcResult mvcResult = this.mockMvc.perform(get("/unit/units/LENGTH"))
                 .andReturn();
         Assert.assertEquals("METER", mvcResult.getResponse().getContentAsString());
     }
