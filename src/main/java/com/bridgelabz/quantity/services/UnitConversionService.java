@@ -13,23 +13,26 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class UnitConversionService {
+public class UnitConversionService implements IUnitConversionService{
 
     private static DecimalFormat decimalFormat = new DecimalFormat("0.000");
     Gson gson = new Gson();
 
+    @Override
     public double convertValue(ValueAndUnitDTO first, ValueAndUnitDTO second){
         QuantityConversion quantityConversion = new QuantityConversion();
         quantityConversion.convertedValue(first, second);
         return Double.parseDouble(decimalFormat.format(second.value));
     }
 
+    @Override
     public String getUnitType() {
         List<UnitType> unitTypes = Arrays.stream(UnitType.values())
                 .collect(Collectors.toList());
         return gson.toJson(unitTypes);
     }
 
+    @Override
     public String getUnits(String unitType) {
         List<QuantityConversion.MeasurementUnit> units = Arrays.stream(QuantityConversion.MeasurementUnit.values())
                 .filter(enumrator -> enumrator.getUnitType().toString().equals(unitType))
