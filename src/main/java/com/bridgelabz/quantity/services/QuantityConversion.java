@@ -15,7 +15,7 @@ public class QuantityConversion {
         }
     }
 
-    protected enum MeasurementUnit {
+    public enum MeasurementUnit {
         FEET(12, 1, LENGTH), INCH(1, 1, LENGTH), YARD(36, 1, LENGTH), CENTIMETER(1, 2.54, LENGTH),
         LITRE(1, 1, VOLUME), MILLI_LITRE( 1,1000, VOLUME), GALLON(3.78, 1, VOLUME),
         KILO_GRAMS(1, 1, WEIGHT), GRAMS(1, 1000, WEIGHT), TON(1000, 1, WEIGHT),
