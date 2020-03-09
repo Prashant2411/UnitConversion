@@ -19,12 +19,12 @@ public class UnitController {
         return unitConversionService.convertValue(obj[0], obj[1]);
     }
 
-    @GetMapping("/getunittype")
+    @GetMapping("/unittype")
     public String getUnitType() {
         return unitConversionService.getUnitType();
     }
 
-    @GetMapping("/getunits/{unitType}")
+    @GetMapping("/units/{unitType}")
     public String getUnits(@PathVariable String unitType){
         return unitConversionService.getUnits(unitType);
     }
