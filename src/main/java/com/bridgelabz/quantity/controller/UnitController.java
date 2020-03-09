@@ -9,7 +9,7 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-public class QuantityMeasurmentController {
+public class UnitController {
 
     @Autowired
     UnitConversionService unitConversionService;

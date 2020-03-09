@@ -2,8 +2,8 @@ package com.bridgelabz.quantity.controller;
 
 import com.bridgelabz.quantity.DTO.ValueAndUnitDTO;
 import com.bridgelabz.quantity.Exception.UnitConversionException;
-import com.bridgelabz.quantity.services.UnitConversionService;
 import com.bridgelabz.quantity.services.QuantityConversion;
+import com.bridgelabz.quantity.services.UnitConversionService;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,34 +11,36 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@SpringBootTest
 @AutoConfigureMockMvc
-public class QuantityMeasurmentControllerMockTest {
-
+@SpringBootTest
+public class UnitControllerTest {
     ValueAndUnitDTO[] obj = new ValueAndUnitDTO[2];
     Gson gson = new Gson();
 
     @Autowired
     MockMvc mockMvc;
 
-    @MockBean
-    private UnitConversionService unitConversionService;
+    @BeforeEach
+    void setUp() {
+        obj[0] = new ValueAndUnitDTO();
+        obj[1] = new ValueAndUnitDTO();
+        obj[0].unit = QuantityConversion.MeasurementUnit.KILO_GRAMS;
+        obj[1].unit = QuantityConversion.MeasurementUnit.GRAMS;
+        obj[0].value = 0;
+        obj[1].value = 1;
+    }
 
     // /unitconverter
 
     @Test
     void givenValueAndUnitDtoJson_whenGetConverted_thenReturnStatus200() throws Exception {
-        when(unitConversionService.convertValue(any(), any())).thenReturn(1.1);
         String jsonDTO = gson.toJson(obj);
         MvcResult mvcResult = this.mockMvc.perform(post("/unitconverter").content(jsonDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
@@ -48,7 +50,6 @@ public class QuantityMeasurmentControllerMockTest {
 
     @Test
     void givenValueAndUnitDtoJson_whenContentTypeAtomXml_thenReturnStatus415() throws Exception {
-        when(unitConversionService.convertValue(any(), any())).thenReturn(1.1);
         String jsonDTO = gson.toJson(obj);
         MvcResult mvcResult = this.mockMvc.perform(post("/unitconverter").content(jsonDTO)
                 .contentType(MediaType.APPLICATION_ATOM_XML)).andReturn();
@@ -58,17 +59,15 @@ public class QuantityMeasurmentControllerMockTest {
 
     @Test
     void givenValueAndUnitDotJson_whenGetConverted_thenReturnConvertedValue() throws Exception {
-        when(unitConversionService.convertValue(any(), any())).thenReturn(1.0);
         String jsonDTO = gson.toJson(obj);
         MvcResult mvcResult = this.mockMvc.perform(post("/unitconverter").content(jsonDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
-        Assert.assertEquals("1.0", mvcResult.getResponse().getContentAsString());
+        Assert.assertEquals("0.001", mvcResult.getResponse().getContentAsString());
     }
 
     @Test
     void givenValueAndUnitDotJson_whenGetConvertedForDifferentUnitTypes_thenThrowException() throws Exception {
         try {
-            when(unitConversionService.convertValue(any(), any())).thenThrow(new UnitConversionException("Invalid Unit Type", UnitConversionException.ExceptionType.UNIT_TYPE_DIFFERENT));
             String jsonDTO = gson.toJson(obj);
             MvcResult mvcResult = this.mockMvc.perform(post("/unitconverter").content(jsonDTO)
                     .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
@@ -81,26 +80,23 @@ public class QuantityMeasurmentControllerMockTest {
 
     @Test
     void whenGetUnitType_thenReturnUnitType() throws Exception {
-        when(unitConversionService.getUnitType()).thenReturn("LENGTH");
         MvcResult mvcResult = this.mockMvc.perform(get("/getunittype"))
                 .andReturn();
-        Assert.assertEquals("LENGTH", mvcResult.getResponse().getContentAsString());
+        Assert.assertEquals("[\"LENGTH\",\"VOLUME\",\"WEIGHT\",\"TEMPERATURE\"]", mvcResult.getResponse().getContentAsString());
     }
 
     // /getunits
 
     @Test
     void givenUnitType_whenGetUnits_thenReturnUnitType() throws Exception {
-        when(unitConversionService.getUnits(any())).thenReturn("METER");
         MvcResult mvcResult = this.mockMvc.perform(get("/getunits/LENGTH"))
                 .andReturn();
-        Assert.assertEquals("METER", mvcResult.getResponse().getContentAsString());
+        Assert.assertEquals("[\"FEET\",\"INCH\",\"YARD\",\"CENTIMETER\"]", mvcResult.getResponse().getContentAsString());
     }
 
     @Test
     void givenWrongUnitType_whenGetUnits_thenReturnException() throws Exception {
         try {
-            when(unitConversionService.getUnits(any())).thenThrow(new UnitConversionException("Invalid Unit Type", UnitConversionException.ExceptionType.NO_SUCH_UNIT_TYPE));
             MvcResult mvcResult = this.mockMvc.perform(get("/getunits/asd"))
                     .andReturn();
         } catch (UnitConversionException e) {
