@@ -40,7 +40,7 @@ public class UnitControllerMockTest {
     void givenValueAndUnitDtoJson_whenGetConverted_thenReturnStatus200() throws Exception {
         when(unitConversionService.convertValue(any(), any())).thenReturn(1.1);
         String jsonDTO = gson.toJson(obj);
-        MvcResult mvcResult = this.mockMvc.perform(post("/unitconverter").content(jsonDTO)
+        MvcResult mvcResult = this.mockMvc.perform(post("/unit/convert").content(jsonDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
         int status = mvcResult.getResponse().getStatus();
         Assert.assertEquals(200, status);
@@ -50,7 +50,7 @@ public class UnitControllerMockTest {
     void givenValueAndUnitDtoJson_whenContentTypeAtomXml_thenReturnStatus415() throws Exception {
         when(unitConversionService.convertValue(any(), any())).thenReturn(1.1);
         String jsonDTO = gson.toJson(obj);
-        MvcResult mvcResult = this.mockMvc.perform(post("/unitconverter").content(jsonDTO)
+        MvcResult mvcResult = this.mockMvc.perform(post("/unit/convert").content(jsonDTO)
                 .contentType(MediaType.APPLICATION_ATOM_XML)).andReturn();
         int status = mvcResult.getResponse().getStatus();
         Assert.assertEquals(415, status);
@@ -60,7 +60,7 @@ public class UnitControllerMockTest {
     void givenValueAndUnitDotJson_whenGetConverted_thenReturnConvertedValue() throws Exception {
         when(unitConversionService.convertValue(any(), any())).thenReturn(1.0);
         String jsonDTO = gson.toJson(obj);
-        MvcResult mvcResult = this.mockMvc.perform(post("/unitconverter").content(jsonDTO)
+        MvcResult mvcResult = this.mockMvc.perform(post("/unit/convert").content(jsonDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
         Assert.assertEquals("1.0", mvcResult.getResponse().getContentAsString());
     }
@@ -70,7 +70,7 @@ public class UnitControllerMockTest {
         try {
             when(unitConversionService.convertValue(any(), any())).thenThrow(new UnitConversionException("Invalid Unit Type", UnitConversionException.ExceptionType.UNIT_TYPE_DIFFERENT));
             String jsonDTO = gson.toJson(obj);
-            MvcResult mvcResult = this.mockMvc.perform(post("/unitconverter").content(jsonDTO)
+            MvcResult mvcResult = this.mockMvc.perform(post("/unit/convert").content(jsonDTO)
                     .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
         } catch (UnitConversionException e) {
             Assert.assertEquals(UnitConversionException.ExceptionType.UNIT_TYPE_DIFFERENT, e.type);
@@ -82,7 +82,7 @@ public class UnitControllerMockTest {
     @Test
     void whenGetUnitType_thenReturnUnitType() throws Exception {
         when(unitConversionService.getUnitType()).thenReturn("LENGTH");
-        MvcResult mvcResult = this.mockMvc.perform(get("/getunittype"))
+        MvcResult mvcResult = this.mockMvc.perform(get("/unit/type"))
                 .andReturn();
         Assert.assertEquals("LENGTH", mvcResult.getResponse().getContentAsString());
     }
@@ -92,7 +92,7 @@ public class UnitControllerMockTest {
     @Test
     void givenUnitType_whenGetUnits_thenReturnUnitType() throws Exception {
         when(unitConversionService.getUnits(any())).thenReturn("METER");
-        MvcResult mvcResult = this.mockMvc.perform(get("/getunits/LENGTH"))
+        MvcResult mvcResult = this.mockMvc.perform(get("/units/LENGTH"))
                 .andReturn();
         Assert.assertEquals("METER", mvcResult.getResponse().getContentAsString());
     }
@@ -101,7 +101,7 @@ public class UnitControllerMockTest {
     void givenWrongUnitType_whenGetUnits_thenReturnException() throws Exception {
         try {
             when(unitConversionService.getUnits(any())).thenThrow(new UnitConversionException("Invalid Unit Type", UnitConversionException.ExceptionType.NO_SUCH_UNIT_TYPE));
-            MvcResult mvcResult = this.mockMvc.perform(get("/getunits/asd"))
+            MvcResult mvcResult = this.mockMvc.perform(get("/units/asd"))
                     .andReturn();
         } catch (UnitConversionException e) {
             Assert.assertEquals(UnitConversionException.ExceptionType.NO_SUCH_UNIT_TYPE, e.type);

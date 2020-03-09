@@ -42,7 +42,7 @@ public class UnitControllerTest {
     @Test
     void givenValueAndUnitDtoJson_whenGetConverted_thenReturnStatus200() throws Exception {
         String jsonDTO = gson.toJson(obj);
-        MvcResult mvcResult = this.mockMvc.perform(post("/unitconverter").content(jsonDTO)
+        MvcResult mvcResult = this.mockMvc.perform(post("/unit/convert").content(jsonDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
         int status = mvcResult.getResponse().getStatus();
         Assert.assertEquals(200, status);
@@ -51,7 +51,7 @@ public class UnitControllerTest {
     @Test
     void givenValueAndUnitDtoJson_whenContentTypeAtomXml_thenReturnStatus415() throws Exception {
         String jsonDTO = gson.toJson(obj);
-        MvcResult mvcResult = this.mockMvc.perform(post("/unitconverter").content(jsonDTO)
+        MvcResult mvcResult = this.mockMvc.perform(post("/unit/convert").content(jsonDTO)
                 .contentType(MediaType.APPLICATION_ATOM_XML)).andReturn();
         int status = mvcResult.getResponse().getStatus();
         Assert.assertEquals(415, status);
@@ -60,7 +60,7 @@ public class UnitControllerTest {
     @Test
     void givenValueAndUnitDotJson_whenGetConverted_thenReturnConvertedValue() throws Exception {
         String jsonDTO = gson.toJson(obj);
-        MvcResult mvcResult = this.mockMvc.perform(post("/unitconverter").content(jsonDTO)
+        MvcResult mvcResult = this.mockMvc.perform(post("/unit/convert").content(jsonDTO)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
         Assert.assertEquals("0.001", mvcResult.getResponse().getContentAsString());
     }
@@ -69,7 +69,7 @@ public class UnitControllerTest {
     void givenValueAndUnitDotJson_whenGetConvertedForDifferentUnitTypes_thenThrowException() throws Exception {
         try {
             String jsonDTO = gson.toJson(obj);
-            MvcResult mvcResult = this.mockMvc.perform(post("/unitconverter").content(jsonDTO)
+            MvcResult mvcResult = this.mockMvc.perform(post("/unit/convert").content(jsonDTO)
                     .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
         } catch (UnitConversionException e) {
             Assert.assertEquals(UnitConversionException.ExceptionType.UNIT_TYPE_DIFFERENT, e.type);

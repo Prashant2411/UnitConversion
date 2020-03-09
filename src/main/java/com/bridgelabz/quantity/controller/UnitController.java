@@ -8,18 +8,19 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
+@RequestMapping("/unit")
 @CrossOrigin(origins = "http://localhost:3000")
 public class UnitController {
 
     @Autowired
     UnitConversionService unitConversionService;
 
-    @PostMapping("/unitconverter")
+    @PostMapping("/convert")
     public double getConverted(@Valid @RequestBody ValueAndUnitDTO... obj){
         return unitConversionService.convertValue(obj[0], obj[1]);
     }
 
-    @GetMapping("/unittype")
+    @GetMapping("/type")
     public String getUnitType() {
         return unitConversionService.getUnitType();
     }
