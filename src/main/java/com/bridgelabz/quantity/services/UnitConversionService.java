@@ -35,7 +35,7 @@ public class UnitConversionService implements IUnitConversionService{
     @Override
     public String getUnits(String unitType) {
         List<QuantityConversion.MeasurementUnit> units = Arrays.stream(QuantityConversion.MeasurementUnit.values())
-                .filter(enumrator -> enumrator.getUnitType().toString().equals(unitType))
+                .filter(enumrator -> enumrator.unitType.toString().equals(unitType))
                 .collect(Collectors.toList());
         if (units.size()==0)
             throw new UnitConversionException("Invalid Unit Type", UnitConversionException.ExceptionType.NO_SUCH_UNIT_TYPE);

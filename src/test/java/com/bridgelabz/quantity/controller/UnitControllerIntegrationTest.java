@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @AutoConfigureMockMvc
 @SpringBootTest
-public class UnitControllerTest {
+public class UnitControllerIntegrationTest {
     ValueAndUnitDTO[] obj = new ValueAndUnitDTO[2];
     Gson gson = new Gson();
 
