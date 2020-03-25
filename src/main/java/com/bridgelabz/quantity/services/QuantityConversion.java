@@ -1,6 +1,6 @@
 package com.bridgelabz.quantity.services;
 
-import com.bridgelabz.quantity.DTO.ValueAndUnitDTO;
+import com.bridgelabz.quantity.dto.ValueAndUnitDTO;
 import com.bridgelabz.quantity.enumarator.UnitType;
 
 import static com.bridgelabz.quantity.enumarator.UnitType.*;

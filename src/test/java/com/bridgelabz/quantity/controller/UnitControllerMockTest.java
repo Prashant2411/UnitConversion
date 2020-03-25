@@ -1,8 +1,7 @@
 package com.bridgelabz.quantity.controller;
 
-import com.bridgelabz.quantity.DTO.ValueAndUnitDTO;
-import com.bridgelabz.quantity.Exception.UnitConversionException;
-import com.bridgelabz.quantity.services.IUnitConversionService;
+import com.bridgelabz.quantity.dto.ValueAndUnitDTO;
+import com.bridgelabz.quantity.exception.UnitConversionException;
 import com.bridgelabz.quantity.services.UnitConversionService;
 import com.google.gson.Gson;
 import org.junit.Assert;
@@ -12,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 

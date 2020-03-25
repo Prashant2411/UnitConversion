@@ -1,7 +1,7 @@
 package com.bridgelabz.quantity.controller;
 
-import com.bridgelabz.quantity.DTO.ValueAndUnitDTO;
-import com.bridgelabz.quantity.Exception.UnitConversionException;
+import com.bridgelabz.quantity.dto.ValueAndUnitDTO;
+import com.bridgelabz.quantity.exception.UnitConversionException;
 import com.bridgelabz.quantity.services.QuantityConversion;
 import com.google.gson.Gson;
 import org.junit.Assert;

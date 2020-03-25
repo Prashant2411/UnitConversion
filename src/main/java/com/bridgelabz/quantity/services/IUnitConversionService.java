@@ -1,6 +1,6 @@
 package com.bridgelabz.quantity.services;
 
-import com.bridgelabz.quantity.DTO.ValueAndUnitDTO;
+import com.bridgelabz.quantity.dto.ValueAndUnitDTO;
 
 public interface IUnitConversionService {
     double convertValue(ValueAndUnitDTO first, ValueAndUnitDTO second);

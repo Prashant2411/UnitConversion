@@ -1,4 +1,4 @@
-package com.bridgelabz.quantity.DTO;
+package com.bridgelabz.quantity.dto;
 
 import com.bridgelabz.quantity.services.QuantityConversion;
 import lombok.ToString;

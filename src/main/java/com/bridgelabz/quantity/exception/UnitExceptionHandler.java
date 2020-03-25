@@ -1,11 +1,10 @@
-package com.bridgelabz.quantity.Exception;
+package com.bridgelabz.quantity.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import javax.validation.constraints.Null;
 
 @ControllerAdvice
 public class UnitExceptionHandler {
@@ -18,5 +17,10 @@ public class UnitExceptionHandler {
     @ExceptionHandler(value = NullPointerException.class)
     public ResponseEntity<Object> nullExceptionHandler(NullPointerException nullException){
         return new ResponseEntity<>("Enter Valid Data", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public ResponseEntity<Object> invalidEnumExcpetionHandler(HttpMessageNotReadableException invalidEnumException){
+        return new ResponseEntity<>("Invalid unit entered", HttpStatus.BAD_REQUEST);
     }
 }

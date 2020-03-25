@@ -1,7 +1,7 @@
 package com.bridgelabz.quantity.service;
 
-import com.bridgelabz.quantity.DTO.ValueAndUnitDTO;
-import com.bridgelabz.quantity.Exception.UnitConversionException;
+import com.bridgelabz.quantity.dto.ValueAndUnitDTO;
+import com.bridgelabz.quantity.exception.UnitConversionException;
 import com.bridgelabz.quantity.services.QuantityConversion;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

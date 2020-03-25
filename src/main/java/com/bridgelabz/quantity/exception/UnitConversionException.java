@@ -1,4 +1,4 @@
-package com.bridgelabz.quantity.Exception;
+package com.bridgelabz.quantity.exception;
 
 public class UnitConversionException extends RuntimeException{
     public enum ExceptionType {
